@@ -14,7 +14,7 @@ public class BootStrapData implements CommandLineRunner {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
-    private final  PublisherRepository publisherRepository;
+    private final PublisherRepository publisherRepository;
 
     public BootStrapData(BookRepository bookRepository, AuthorRepository authorRepository, PublisherRepository publisherRepository) {
         this.bookRepository = bookRepository;
@@ -24,22 +24,34 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("Started in BootStrap");
+
         Publisher publisher = new Publisher("Rua turiassu", "Sao Paulo", "SP", 32324242L);
         publisherRepository.save(publisher);
-        System.out.println(publisherRepository.count());
+        System.out.println("Publisher: " + publisherRepository.count());
 
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "123456");
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
         ddd.setPublisher(publisher);
-        publisher.getBooks().add(ddd);
 
         authorRepository.save(eric);
         bookRepository.save(ddd);
+
+        Author leo = new Author("Leonardo", "freitas");
+        Book lorem = new Book("Lorem Ipsum", "122121");
+        leo.getBooks().add(lorem);
+        lorem.getAuthors().add(leo);
+
+        authorRepository.save(leo);
+        bookRepository.save(lorem);
+
+        System.out.println("Authors: " + authorRepository.count());
+        System.out.println("Books: " + bookRepository.count());
+
+        publisher.getBooks().add(ddd);
+        publisher.getBooks().add(lorem);
         publisherRepository.save(publisher);
-
-
-        System.out.println("Started in BootStrap");
     }
 }
