@@ -52,6 +52,7 @@ public class BootStrapData implements CommandLineRunner {
 
         publisher.getBooks().add(ddd);
         publisher.getBooks().add(lorem);
+        publisher.setName("Lorem Ipsum");
         publisherRepository.save(publisher);
     }
 }
